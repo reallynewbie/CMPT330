@@ -1,13 +1,11 @@
-﻿// Last slide = 32/99
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 // This part protects the program by making it require Rigidbody
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
-//[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Animator))]
 
 /*
  * Capsule collider?
@@ -47,6 +45,8 @@ public class TPC_Control_Test : MonoBehaviour
     private float capsuleHeight;
     private Vector3 capsuleCenter;
     private CapsuleCollider capsule;
+    private Animator animator;
+    private Vector3 speed;
 
     // Start is called before the first frame update
     void Start()
@@ -66,13 +66,21 @@ public class TPC_Control_Test : MonoBehaviour
         state = TPC_State.ON_GROUND;
 
         bodyCenter = transform.localPosition;
+
+        animator = gameObject.GetComponent<Animator>();
+
+        animator.SetFloat("speed", 0f);
+        animator.SetInteger("state", (int)TPC_State.ON_GROUND);
+        animator.SetBool("Dead", false);
+        animator.SetBool("Dying", false);
     }
 
     // Use FixedUpdate, not Update, because we're using the physics engine
     void FixedUpdate()
     {
-        bool isJumping = Input.GetButtonDown("Jump");
+        //bool isJumping = Input.GetButtonDown("Jump");
         bool isWalking = Input.GetButton("Walk");
+        animator = gameObject.GetComponent<Animator>();
 
         /*
          * A switch is good because it keeps actions separate
@@ -94,12 +102,18 @@ public class TPC_Control_Test : MonoBehaviour
                 }
                 // Need to make sure state transition is valid
                 // + need to add a Y velocity component to get jump going
-                if(isJumping)
+
+
+                /*
+                 * NOTE: isJumping is currently quarantined!
+                if (isJumping)
                 {
                     state = TPC_State.IN_AIR;
                     physics.velocity = new Vector3(physics.velocity.x, JUMP_SPEED, physics.velocity.z);
                     return;
                 }
+                */
+
                 // When moving we need to rotate out object
                 // transform.rotate is easier to deal with than rigidBody.SetTorque
                 // Only rotating about the Y axis so X and Z = 0

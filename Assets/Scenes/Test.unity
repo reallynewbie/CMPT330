@@ -123,6 +123,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VelluaMagician_A_SKEL
       objectReference: {fileID: 0}
+    - target: {fileID: 100094, guid: 2eefde23aa79d06448d18d98cc9a7c71, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 2eefde23aa79d06448d18d98cc9a7c71, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -224,6 +228,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &341015194
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 341015189}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 31731b2cc2d9e6c49a61c50f1084e392, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &736409036
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,7 +412,7 @@ GameObject:
   - component: {fileID: 1520568755}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
