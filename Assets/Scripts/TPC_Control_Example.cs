@@ -14,11 +14,11 @@ using UnityEngine;
  * Since we have a capsule, we may as well use it
  */
 
-public class TPC_Control_Test : MonoBehaviour
+public abstract class TPC_Control_Example : MonoBehaviour
 {
 
     // States
-    public enum TPC_State {ON_GROUND, IN_AIR};
+    public enum TPC_State { ON_GROUND, IN_AIR };
     /* 
      * We create an enum for our states:
      *       * Easier to understand
@@ -29,11 +29,11 @@ public class TPC_Control_Test : MonoBehaviour
      * turned into private variables
      */
     //Critical Constants
-    public float TURN_SPEED = 180f; // Turning speed per second
-    public float RUN_SPEED = 5f; // Move speed when WALK isn't pressed
-    public float WALK_SPEED = 2.5f; // Move speed when WALK is pressed
-    public float JUMP_SPEED = 4f; // Jump initial vertical speed
-    public float HYSTERESIS = 0.25f;
+    public float TURN_SPEED; // Turning speed per second
+    public float RUN_SPEED; // Move speed when WALK isn't pressed
+    public float WALK_SPEED; // Move speed when WALK is pressed
+    public float JUMP_SPEED; // Jump initial vertical speed
+    public float HYSTERESIS;
 
     // Public Variables
     public TPC_State state;
@@ -57,8 +57,8 @@ public class TPC_Control_Test : MonoBehaviour
         capsuleCenter = capsule.center;
 
         physics = transform.GetComponent<Rigidbody>(); // Gets the Rigidbody
-        physics.constraints = RigidbodyConstraints.FreezeRotationX | 
-            RigidbodyConstraints.FreezeRotationY | 
+        physics.constraints = RigidbodyConstraints.FreezeRotationX |
+            RigidbodyConstraints.FreezeRotationY |
             RigidbodyConstraints.FreezeRotationZ;
         // In the above, we make it so that Rigidbody can't be 
         // rotated by the physics engine; we want to do that ourselves
@@ -69,8 +69,8 @@ public class TPC_Control_Test : MonoBehaviour
 
         animator = gameObject.GetComponent<Animator>();
 
-        animator.SetFloat("Speed", 0f);
-        animator.SetInteger("State", (int)TPC_State.ON_GROUND);
+        animator.SetFloat("speed", 0f);
+        animator.SetInteger("state", (int)TPC_State.ON_GROUND);
         animator.SetBool("Dead", false);
         animator.SetBool("Dying", false);
     }
@@ -118,7 +118,7 @@ public class TPC_Control_Test : MonoBehaviour
                 // transform.rotate is easier to deal with than rigidBody.SetTorque
                 // Only rotating about the Y axis so X and Z = 0
                 transform.Rotate(0, Input.GetAxis("Turn") * TURN_SPEED * Time.deltaTime, 0);
-                SetSpeed (isWalking ? WALK_SPEED : RUN_SPEED);
+                SetSpeed(isWalking ? WALK_SPEED : RUN_SPEED);
 
                 physics.AddForce(Vector3.down * physics.mass * 10f); // Force char to the ground
 
@@ -131,10 +131,10 @@ public class TPC_Control_Test : MonoBehaviour
         }
     }
 
-    private void SetSpeed (float speed)
+    private void SetSpeed(float speed)
     {
         Vector3 targetSpeed = Input.GetAxis("Forward") * speed * transform.forward;
-
+        
         targetSpeed = Vector3.Lerp(physics.velocity, targetSpeed, HYSTERESIS);
         /*
          * Vector3.LERP = linear interpolation; efficient
@@ -146,7 +146,8 @@ public class TPC_Control_Test : MonoBehaviour
         { // Here, we do plane projection
             Vector3 move = Vector3.ProjectOnPlane(targetSpeed, groundNormal);
             physics.velocity = move;
-        } else
+        }
+        else
         {
             physics.velocity = targetSpeed; // Prevents jittering
         }
@@ -170,7 +171,7 @@ public class TPC_Control_Test : MonoBehaviour
             case "Terrain":
                 // Calculate avg of ground contact point surface normals
                 groundNormal = Vector3.zero;
-                foreach(ContactPoint pt in collision.contacts)
+                foreach (ContactPoint pt in collision.contacts)
                 {
                     groundNormal += pt.normal;
                 }
