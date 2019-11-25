@@ -21,7 +21,7 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //updateCurrentHealth(-1);
+        updateCurrentHealth(-1);
     }
 
     private void FixedUpdate()
