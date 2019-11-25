@@ -84,8 +84,10 @@ public class TPC_Control_Test : MonoBehaviour
     {
         //bool isJumping = Input.GetButtonDown("Jump");
         bool isWalking = Input.GetButton("Walk");
+        bool isAttacking = Input.GetButton("Fire1");
         animator = gameObject.GetComponent<Animator>();
 
+        Debug.Log("In here " + state);
         /*
          * A switch is good because it keeps actions separate
          * Don't have to worry about a lot of boolean variables
@@ -108,7 +110,7 @@ public class TPC_Control_Test : MonoBehaviour
                 // + need to add a Y velocity component to get jump going
 
 
-                /*
+                /* ========================================================================
                  * NOTE: isJumping is currently quarantined!
                 if (isJumping)
                 {
@@ -116,7 +118,7 @@ public class TPC_Control_Test : MonoBehaviour
                     physics.velocity = new Vector3(physics.velocity.x, JUMP_SPEED, physics.velocity.z);
                     return;
                 }
-                */
+                ========================================================================= */
 
                 // When moving we need to rotate out object
                 // transform.rotate is easier to deal with than rigidBody.SetTorque
@@ -131,6 +133,9 @@ public class TPC_Control_Test : MonoBehaviour
             case TPC_State.IN_AIR: // In the air, can't do much
                 if (isGrounded)
                     state = TPC_State.ON_GROUND;
+                break;
+
+            case TPC_State.ATTACK1: // The mage does the first of his attacks
                 break;
         }
     }
