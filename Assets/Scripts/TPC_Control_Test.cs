@@ -21,7 +21,7 @@ public class TPC_Control_Test : MonoBehaviour
     private const float NEW_SPEED = 1f - OLD_SPEED;
 
     // States
-    public enum TPC_State {ON_GROUND, IN_AIR};
+    public enum TPC_State {ON_GROUND, IN_AIR, ATTACK1, ATTACK2, ATTACK3};
     /* 
      * We create an enum for our states:
      *       * Easier to understand
@@ -176,7 +176,7 @@ public class TPC_Control_Test : MonoBehaviour
         speed.y = vSpeed;
 
         physics.velocity = speed;
-        animator.SetFloat("speed", speed.magnitude / v);
+        animator.SetFloat("Speed", speed.magnitude / v);
     }
 
     /*
