@@ -16,6 +16,9 @@ using UnityEngine;
 
 public class TPC_Control_Test : MonoBehaviour
 {
+    // Test constants
+    private const float OLD_SPEED = 0.85f;
+    private const float NEW_SPEED = 1f - OLD_SPEED;
 
     // States
     public enum TPC_State {ON_GROUND, IN_AIR};
@@ -28,6 +31,7 @@ public class TPC_Control_Test : MonoBehaviour
      * for testing. Once the code is working and accepted, they'll be
      * turned into private variables
      */
+
     //Critical Constants
     public float TURN_SPEED = 180f; // Turning speed per second
     public float RUN_SPEED = 5f; // Move speed when WALK isn't pressed
@@ -131,17 +135,20 @@ public class TPC_Control_Test : MonoBehaviour
         }
     }
 
-    private void SetSpeed (float speed)
+    private void SetSpeed (float v)
     {
+        /*
         Vector3 targetSpeed = Input.GetAxis("Forward") * speed * transform.forward;
 
         targetSpeed = Vector3.Lerp(physics.velocity, targetSpeed, HYSTERESIS);
-        /*
+        
+        //
          * Vector3.LERP = linear interpolation; efficient
          * physics.velocity = current speed
          * A larger physics.velocity = lower acceleration
          * Note: this is a per frame calculation (30+ cycles / second)
-         */
+        //
+
         if ((targetSpeed - physics.velocity).sqrMagnitude > 0.0001f)
         { // Here, we do plane projection
             Vector3 move = Vector3.ProjectOnPlane(targetSpeed, groundNormal);
@@ -150,6 +157,26 @@ public class TPC_Control_Test : MonoBehaviour
         {
             physics.velocity = targetSpeed; // Prevents jittering
         }
+        animator.SetFloat("speed", speed.magnitude / v);
+        */
+
+        // Test
+        float vSpeed = physics.velocity.y;
+
+        animator = gameObject.GetComponent<Animator>();
+
+        Vector3 targetSpeed = Input.GetAxis("Forward") * v * transform.forward;
+        Vector3 newSpeed = speed * OLD_SPEED + targetSpeed * NEW_SPEED;
+
+        speed = ((newSpeed - targetSpeed).sqrMagnitude > 0.0001f) ?
+            Vector3.ProjectOnPlane(newSpeed, groundNormal) :
+            Vector3.ProjectOnPlane(targetSpeed, groundNormal);
+
+        // Vertical speed
+        speed.y = vSpeed;
+
+        physics.velocity = speed;
+        animator.SetFloat("speed", speed.magnitude / v);
     }
 
     /*
