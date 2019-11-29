@@ -133,7 +133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 2eefde23aa79d06448d18d98cc9a7c71, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.155
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400094, guid: 2eefde23aa79d06448d18d98cc9a7c71, type: 3}
       propertyPath: m_LocalPosition.z
@@ -189,15 +189,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 341015189}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bab5c144624945945852f589bc5476b7, type: 3}
+  m_Script: {fileID: 11500000, guid: 9cc17f0fdcc7e054e962aab9b96ab9f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TURN_SPEED: 180
   RUN_SPEED: 5
-  WALK_SPEED: 2.5
-  JUMP_SPEED: 4
   HYSTERESIS: 0.25
-  state: 0
 --- !u!136 &341015191
 CapsuleCollider:
   m_ObjectHideFlags: 0
